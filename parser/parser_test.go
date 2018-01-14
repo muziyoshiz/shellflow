@@ -3,8 +3,9 @@ package parser_test
 import (
 	"testing"
 
-	"github.com/muziyoshiz/shellflow/parser"
 	"strings"
+
+	"github.com/muziyoshiz/shellflow/parser"
 )
 
 // Works with one-liner
@@ -23,9 +24,6 @@ func TestParseWithOneLiner(t *testing.T) {
 	}
 
 	cmd := commands[0]
-	if cmd.Number != 1 {
-		t.Fatalf("Expected 1; got %d", cmd.Number)
-	}
 	if cmd.Description != "" {
 		t.Fatalf("Expected blank; got %s", cmd.Description)
 	}
@@ -47,22 +45,22 @@ func TestParseWithMultiLineCommand(t *testing.T) {
 	parse := parser.Parser()
 
 	commands, err := parse(lines[0])
-	if len(commands) != 0 {
-		t.Fatalf("Expected 0; got %d", len(commands))
-	}
 	if err != nil {
 		t.Fatalf("Expected No error; got %+v", err)
 	}
+	if len(commands) != 0 {
+		t.Fatalf("Expected 0; got %d", len(commands))
+	}
 
 	commands, err = parse(lines[1])
+	if err != nil {
+		t.Fatalf("Expected No error; got %+v", err)
+	}
 	if len(commands) != 1 {
 		t.Fatalf("Expected 1; got %d", len(commands))
 	}
 
 	cmd := commands[0]
-	if cmd.Number != 1 {
-		t.Fatalf("Expected 1; got %d", cmd.Number)
-	}
 	if cmd.Description != "" {
 		t.Fatalf("Expected blank; got %s", cmd.Description)
 	}

@@ -8,8 +8,8 @@ import (
 // EOF is a special string to teach the end of shell script to the parser
 const EOF string = "EOF"
 
+// ShellCommand is a shell command from stdin or file
 type ShellCommand struct {
-	Number      int
 	Description string
 	Command     string
 }
@@ -44,8 +44,8 @@ func Parser() func(string) ([]ShellCommand, error) {
 			return commands, nil
 		}
 
-		serial += 1
-		commands = append(commands, ShellCommand{serial, desc, preLine + line})
+		serial++
+		commands = append(commands, ShellCommand{desc, preLine + line})
 
 		// Reset temporary values
 		desc, preLine = "", ""

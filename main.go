@@ -59,11 +59,21 @@ func _main() int {
 	for num, cmd := range commands {
 		fmt.Printf("# %d. %s\n", num+1, cmd.Description)
 		fmt.Printf("%s\n", cmd.Command)
+	}
 
-		out, err := exec.Command("sh", "-c", cmd.Command).Output()
+	if *dryRunOpt {
+		return 0
+	}
+
+	for num, cmd := range commands {
+		fmt.Printf("# %d. %s\n", num+1, cmd.Description)
+		fmt.Printf("%s\n", cmd.Command)
+
+		out, err := exec.Command("sh", "-c", cmd.Command).Output() // #nosec
 		if err != nil {
 			return 1
 		}
+
 		fmt.Printf("%s", out)
 	}
 
